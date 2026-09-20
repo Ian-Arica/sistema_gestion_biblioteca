@@ -21,10 +21,4 @@ public class Libro {
         System.out.println("Estado del libro: " + estado_libro);
     };
 
-    // Modificar la información de un Libro.
-    public void modificarInfo(){
-        
-        codigo_libro = s.next();
-    }
-
 }
