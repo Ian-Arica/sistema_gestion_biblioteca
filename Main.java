@@ -156,7 +156,11 @@ public class Main {
         prestamos[3].estado = "ACTIVO";
         
 
-        // Sistema de Menú //
+        /*
+        ===============================
+        ======= Sistema de Menú =======
+        ===============================
+        */
         System.out.println("-- Menú Principal --");
         System.out.println("Ingrese la opción que desee:\n1.Mostrar libros.\n2.Mostrar usuarios.\n3.Realizar préstamo.\n.4.Registrar devolución.\n5.Mostrar préstamos activos.\n6.Buscar un libro.\n7.Mostrar estadísticas.\n");
 
@@ -165,14 +169,30 @@ public class Main {
 
         // Condicional switch para la verificación de elección
         switch (decision) {
+
+            // Caso de elección de Mostrar Libros
             case 1:
                 System.out.println(" ------------------ Libros ------------------");
+
+                // Bluce para iterar los libros 
+                for (int x = 0; x < libros.length; x++){
+                    libros[x].consultarInfo();      // Llamado al método para mostrar la información del libro
+                    System.out.println("\n-----------------------------------------\n");
+                }
                 break;
 
+            // Caso de elección de Mostrar usuarios
             case 2:
                 System.out.println(" ------------------ Usuarios ------------------");
+
+                // Blucle para iterar los usuarios
+                for (int x = 0; x < usuarios.length; x++){
+                    usuarios[x].consultarInfo();    // Llamdo al método para mostrar la información del usuario
+                    System.out.println("\n-----------------------------------------\n");
+                }
                 break;
 
+            // Caso de elección de Realizar préstamo
             case 3:
                 System.out.println(" ------------------ Realizar prestamo ------------------");
                 break;
