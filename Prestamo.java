@@ -1,8 +1,7 @@
 public class Prestamo {
     
-    String usuario_prestamo;
-    String libro_prestado;
+    Usuario usuario_prestamo;
+    Libro libro_prestado;
     int dias_prestado;
     String estado;
-    
 }
