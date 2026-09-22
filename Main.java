@@ -155,7 +155,6 @@ public class Main {
         prestamos[3].dias_prestado = 6;
         prestamos[3].estado = "ACTIVO";
         
-
         /*
         ===============================
         ======= Sistema de Menú =======
@@ -166,7 +165,7 @@ public class Main {
 
         // Desición de menú ingresada por el usuario
         int decision = s.nextInt();
-
+        
         // Condicional switch para la verificación de elección
         switch (decision) {
 
@@ -181,18 +180,18 @@ public class Main {
                 }
                 break;
 
-            // Caso de elección de Mostrar usuarios
-            case 2:
-                System.out.println(" ------------------ Usuarios ------------------");
-
-                // Blucle para iterar los usuarios
+                // Caso de elección de Mostrar usuarios
+                case 2:
+                    System.out.println(" ------------------ Usuarios ------------------");
+                    
+                    // Blucle para iterar los usuarios
                 for (int x = 0; x < usuarios.length; x++){
                     usuarios[x].consultarInfo();    // Llamdo al método para mostrar la información del usuario
                     System.out.println("\n-----------------------------------------\n");
                 }
                 break;
 
-            // Caso de elección de Realizar préstamo
+                // Caso de elección de Realizar préstamo
             case 3:
                 System.out.println(" ------------------ Realizar prestamo ------------------");
 
@@ -201,18 +200,18 @@ public class Main {
                 === Verificación de Prestamo posible ===
                 ========================================
                 */
-
-                // Usuario existente
-                System.out.print("Ingrese el código de Usuario: ");
-                String codigoIngresado = s.next();
-                
-                // Bucle para iterar y comprobar la existencia del usuario
-                for (int x = 0; x < usuarios.length; x++){
-                    if (usuarios[x].codigo_usuario.equals(codigoIngresado)){
-                        
-                        System.out.print("Ingrese el código del Libro: ");
-                        String codigoLibroIngresado = s.next();
-
+               
+               // Usuario existente
+               System.out.print("Ingrese el código de Usuario: ");
+               String codigoIngresado = s.next();
+               
+               // Bucle para iterar y comprobar la existencia del usuario
+               for (int x = 0; x < usuarios.length; x++){
+                   if (usuarios[x].codigo_usuario.equals(codigoIngresado)){
+                       
+                       System.out.print("Ingrese el código del Libro: ");
+                       String codigoLibroIngresado = s.next();
+                       
                         // Bucle para iterar y comprobar la existencia del libro
                         for (int i = 0; i < libros.length; i++){
                             if (libros[i].codigo_libro.equals(codigoLibroIngresado)){
@@ -222,26 +221,41 @@ public class Main {
 
                                     // Comprobar que Usuario no ha alcanzado límite de prestamos
                                     if ((usuarios[x].prestamos_activos <= 3 && usuarios[x].tipo_usuario.equals("ESTUDIANTE") || (usuarios[x].prestamos_activos >= 2 && usuarios[x].tipo_usuario.equals("GENERAL"))) ){
-
-                                        // Comprobar los días de préstamo
+                                        
+                                        /*
+                                        ========================================
+                                        ==== Comprobar los días de préstamo ==== 
+                                        ========================================
+                                        */
                                         System.out.print("Ingrese los días de prestamo: ");
                                         int diasPrestamo = s.nextInt();
 
                                         if ((usuarios[x].tipo_usuario.equals("ESTUDIANTE") && diasPrestamo <= 15) || (usuarios[x].tipo_usuario.equals("GENERAL") && diasPrestamo <= 7)){
                                             
-                                            /* Creación de la solicitud del Prestamo
+                                            // Obtener el nuevo índice
                                             
-                                            int nuevoId = prestamos[].length + 1;     // Obtener el nuevo valor del índice
-                                            prestamos[nuevoId] = new Prestamo();
-                                            prestamos[nuevoId].usuario_prestamo = usuarios[x];
-                                            prestamos[nuevoId].libro_prestado = libros[i];
-                                            prestamos[nuevoId].dias_prestado = diasPrestamo;
-                                            prestamos[nuevoId].estado = "ACTIVO";
-                                             */
+                                            int posicionLibre = -1;
+                                            
+                                            for (int f = 0; f < prestamos.length; f++){
+                                                if (prestamos[f] == null){
+                                                    posicionLibre = f;
+                                                     break;
+                                                }
+                                            }
+
+                                            // Creación del préstamo
+                                            
+                                            System.out.print("LLego hasta aca xd");
+
+                                            prestamos[posicionLibre] = new Prestamo();
+                                            prestamos[posicionLibre].usuario_prestamo = usuarios[x];
+                                            prestamos[posicionLibre].libro_prestado = libros[i];
+                                            prestamos[posicionLibre].dias_prestado = diasPrestamo;
+                                            prestamos[posicionLibre].estado = "ACTIVO";
 
                                             // Actualizar los datos
-
-
+                                            libros[i].actualizarInfo();
+                                            usuarios[x].actualizarInfo();
                                         }
                                     }
 
@@ -253,6 +267,7 @@ public class Main {
                 break;
             case 4:
                 System.out.println(" ------------------ Realizar devolución ------------------");
+                
             default:
                 break;
         }

@@ -17,4 +17,8 @@ public class Usuario {
         System.out.println("Tipo: " + tipo_usuario);
         System.out.println("Prestamos activos: " + prestamos_activos);
     }
+
+    public void actualizarInfo(){
+        prestamos_activos ++;
+    }
 }
