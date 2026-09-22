@@ -132,24 +132,28 @@ public class Main {
 
         // Creación de los préstamos 
         prestamos[0] = new Prestamo();
+        prestamos[0].id = 0001;
         prestamos[0].usuario_prestamo = usuarios[3];
         prestamos[0].libro_prestado = libros[5];
         prestamos[0].dias_prestado = 3;
         prestamos[0].estado = "ACTIVO";
         // --------------------------------------- //
         prestamos[1] = new Prestamo();
+        prestamos[1].id = 0002;
         prestamos[1].usuario_prestamo = usuarios[3];
         prestamos[1].libro_prestado = libros[4];
         prestamos[1].dias_prestado = 3;
         prestamos[1].estado = "DEVUELTO";
         // --------------------------------------- //
         prestamos[2] = new Prestamo();
+        prestamos[2].id = 0003;
         prestamos[2].usuario_prestamo = usuarios[2];
         prestamos[2].libro_prestado = libros[9];
         prestamos[2].dias_prestado = 2;
         prestamos[2].estado = "DEVUELTO";
         // --------------------------------------- //
         prestamos[3] = new Prestamo();
+        prestamos[3].id = 0004;
         prestamos[3].usuario_prestamo = usuarios[2];
         prestamos[3].libro_prestado = libros[7];
         prestamos[3].dias_prestado = 6;
@@ -235,27 +239,36 @@ public class Main {
                                             // Obtener el nuevo índice
                                             
                                             int posicionLibre = -1;
+                                            int nuevoId = 0;
                                             
                                             for (int f = 0; f < prestamos.length; f++){
                                                 if (prestamos[f] == null){
                                                     posicionLibre = f;
                                                      break;
                                                 }
+
+                                                // Obtener nuevo id
+                                                for (int g = 0; g <= prestamos[f].id; g++){
+                                                    nuevoId = g;
+                                                }
                                             }
+
+                                            System.out.println(nuevoId);
 
                                             // Creación del préstamo
                                             
                                             System.out.print("LLego hasta aca xd");
 
                                             prestamos[posicionLibre] = new Prestamo();
+                                            prestamos[posicionLibre].id = nuevoId;
                                             prestamos[posicionLibre].usuario_prestamo = usuarios[x];
                                             prestamos[posicionLibre].libro_prestado = libros[i];
                                             prestamos[posicionLibre].dias_prestado = diasPrestamo;
                                             prestamos[posicionLibre].estado = "ACTIVO";
-
                                             // Actualizar los datos
-                                            libros[i].actualizarInfo();
-                                            usuarios[x].actualizarInfo();
+                                            libros[i].aumentarPrestamo();
+                                            usuarios[x].aumentarPrestamo();
+
                                         }
                                     }
 
@@ -263,10 +276,55 @@ public class Main {
                             }
                         }
                     }
+
                 }
+
                 break;
             case 4:
                 System.out.println(" ------------------ Realizar devolución ------------------");
+
+
+                /*
+                ==============================================
+                ==== Verificar la existencia del préstamo ====
+                ==============================================
+                */
+
+                boolean idNoEncontrado = false;     // variable de confirmación de existencia
+
+                System.out.print("Ingrese el Id del préstamo: ");
+                int idIngresado = s.nextInt();
+
+                // Bucle para iterar y comparar la existencia del id ingresado
+                for (int x = 0; x < prestamos.length; x++){
+                    if (prestamos[x] != null){
+
+                        System.out.println(prestamos[x].id);
+
+                        if (prestamos[x].id == idIngresado){
+                            idNoEncontrado = true;      // Manejo de condición
+
+                            System.out.print("Seguro que quiere devolver: y/n ");
+                            String validacion = s.next();
+
+                            if (validacion.equals("y")){
+
+                                String usuario = "" + prestamos[x].usuario_prestamo;
+                                System.out.println(usuario);
+                            }
+
+                            break;
+
+
+                        }
+                        else{idNoEncontrado = false;}
+                        
+                    }
+                }
+
+                if (!idNoEncontrado){
+                    System.out.println("El id ingresado no corresponde a ningun préstamo.");
+                }
                 
             default:
                 break;

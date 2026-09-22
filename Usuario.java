@@ -18,7 +18,11 @@ public class Usuario {
         System.out.println("Prestamos activos: " + prestamos_activos);
     }
 
-    public void actualizarInfo(){
+    public void aumentarPrestamo(){
         prestamos_activos ++;
+    }
+
+    public void devolucion(){
+        prestamos_activos --;
     }
 }

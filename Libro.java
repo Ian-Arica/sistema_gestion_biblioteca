@@ -21,4 +21,14 @@ public class Libro {
         System.out.println("Estado del libro: " + estado_libro);
     };
 
+    public void aumentarPrestamo(){
+
+        cantidad_disponible --;
+        
+    }
+
+    public void devolucion(){
+        cantidad_disponible ++;
+    }
+
 }

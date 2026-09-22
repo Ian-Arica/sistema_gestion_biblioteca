@@ -1,5 +1,6 @@
 public class Prestamo {
     
+    int id;
     Usuario usuario_prestamo;
     Libro libro_prestado;
     int dias_prestado;
@@ -7,6 +8,7 @@ public class Prestamo {
 
     public void consularPrestamos(){
         System.out.println("-- Información del Prestamo --");
+        System.out.println("ID: " + id);
         System.out.println("Usuario del préstamo: " + usuario_prestamo);
         System.out.println("Libro prestado: " + libro_prestado);
         System.out.println("Dias de préstamo: " + dias_prestado);
