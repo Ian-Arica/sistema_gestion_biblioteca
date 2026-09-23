@@ -14,4 +14,10 @@ public class Prestamo {
         System.out.println("Dias de préstamo: " + dias_prestado);
         System.out.println("Estado del préstamo: " + estado);
     }
+
+    public void devolucion(){
+        libro_prestado.cantidad_disponible ++;
+        usuario_prestamo.prestamos_activos ++;
+        libro_prestado.estado_libro = "DEVUELTO";
+    }
 }
