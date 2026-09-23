@@ -6,7 +6,7 @@ public class Prestamo {
     int dias_prestado;
     String estado;
 
-    public void consularPrestamos(){
+    public void consultarPrestamos(){
         System.out.println("-- Información del Prestamo --");
         System.out.println("ID: " + id);
         System.out.println("Usuario del préstamo: " + usuario_prestamo);
@@ -16,8 +16,8 @@ public class Prestamo {
     }
 
     public void devolucion(){
-        libro_prestado.cantidad_disponible ++;
-        usuario_prestamo.prestamos_activos ++;
-        libro_prestado.estado_libro = "DEVUELTO";
+        libro_prestado.devolucion();
+        usuario_prestamo.devolucion();
+        estado = "DEVUELTO";
     }
 }

@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;       // Importación de la librería Scanner
 
 public class Main {
@@ -132,28 +133,28 @@ public class Main {
 
         // Creación de los préstamos 
         prestamos[0] = new Prestamo();
-        prestamos[0].id = 0001;
+        prestamos[0].id = 1;
         prestamos[0].usuario_prestamo = usuarios[3];
         prestamos[0].libro_prestado = libros[5];
         prestamos[0].dias_prestado = 3;
         prestamos[0].estado = "ACTIVO";
         // --------------------------------------- //
         prestamos[1] = new Prestamo();
-        prestamos[1].id = 0002;
+        prestamos[1].id = 2;
         prestamos[1].usuario_prestamo = usuarios[3];
         prestamos[1].libro_prestado = libros[4];
         prestamos[1].dias_prestado = 3;
         prestamos[1].estado = "ACTIVO";
         // --------------------------------------- //
         prestamos[2] = new Prestamo();
-        prestamos[2].id = 0003;
+        prestamos[2].id = 3;
         prestamos[2].usuario_prestamo = usuarios[2];
         prestamos[2].libro_prestado = libros[9];
         prestamos[2].dias_prestado = 2;
         prestamos[2].estado = "DEVUELTO";
         // --------------------------------------- //
         prestamos[3] = new Prestamo();
-        prestamos[3].id = 0004;
+        prestamos[3].id = 4;
         prestamos[3].usuario_prestamo = usuarios[2];
         prestamos[3].libro_prestado = libros[7];
         prestamos[3].dias_prestado = 6;
@@ -165,7 +166,7 @@ public class Main {
         ===============================
         */
         System.out.println("-- Menú Principal --");
-        System.out.println("Ingrese la opción que desee:\n1.Mostrar libros.\n2.Mostrar usuarios.\n3.Realizar préstamo.\n4.Registrar devolución.\n5.Mostrar préstamos activos.\n6.Buscar un libro.\n7.Mostrar estadísticas.\n");
+        System.out.println("Ingrese la opción que desee:\n1.Mostrar libros.\n2.Mostrar usuarios.\n3.Realizar préstamo.\n4.Registrar devolución.\n5.Mostrar préstamos activos.\n6.Buscar un libro.\n7.Mostrar estadísticas.\n8. Salir.\n");
 
         
         try {
@@ -177,24 +178,35 @@ public class Main {
                 // Caso de elección de Mostrar Libros
                 case 1:
                     System.out.println(" ------------------ Libros ------------------");
-    
-                    // Bluce para iterar los libros 
-                    for (int x = 0; x < libros.length; x++){
-                        libros[x].consultarInfo();      // Llamado al método para mostrar la información del libro
-                        System.out.println("\n-----------------------------------------\n");
+                    try {
+                        // Bluce para iterar los libros 
+                        for (int x = 0; x < libros.length; x++){
+                            libros[x].consultarInfo();      // Llamado al método para mostrar la información del libro
+                            System.out.println("\n-----------------------------------------\n");
+                        }
+                        break;
+                        
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Se desbordo de la cantidad del array.");
+                        break;
                     }
-                    break;
     
                     // Caso de elección de Mostrar usuarios
                 case 2:
                         System.out.println(" ------------------ Usuarios ------------------");
                         
                         // Blucle para iterar los usuarios
-                    for (int x = 0; x < usuarios.length; x++){
-                        usuarios[x].consultarInfo();    // Llamdo al método para mostrar la información del usuario
-                        System.out.println("\n-----------------------------------------\n");
+                    try {
+                        for (int x = 0; x < usuarios.length; x++){
+                            usuarios[x].consultarInfo();    // Llamdo al método para mostrar la información del usuario
+                            System.out.println("\n-----------------------------------------\n");
+                        }
+                        break;
+                        
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Se desbordo de la cantidad del array.");
+                        break;
                     }
-                    break;
     
                     // Caso de elección de Realizar préstamo
                 case 3:
@@ -209,111 +221,136 @@ public class Main {
                    // Usuario existente
                    System.out.print("Ingrese el código de Usuario: ");
                    String codigoIngresado = s.next();
-                   boolean existenciaUsuario = true;
-                   boolean existenciaLibro = true;
-                   boolean limitePrestamos = true;
-                   boolean diasIngresados = true;
+                   boolean existenciaUsuario = false;
+                   boolean existenciaLibro = false;
+                   boolean limitePrestamos = false;
+                   boolean diasIngresados = false;
     
                    
                    // Bucle para iterar y comprobar la existencia del usuario
-                   for (int x = 0; x < usuarios.length; x++){
-                       if (usuarios[x].codigo_usuario.equals(codigoIngresado)){
-                            existenciaUsuario = true;
-                           
-                           System.out.print("Ingrese el código del Libro: ");
-                           String codigoLibroIngresado = s.next();
-                           
-                            // Bucle para iterar y comprobar la existencia del libro
-                            for (int i = 0; i < libros.length; i++){
-                                if (libros[i].codigo_libro.equals(codigoLibroIngresado)){
-                                    existenciaLibro = true;
-                                    
-                                    // Comprobrar existencias de ejemplares
-                                    if (libros[i].cantidad_disponible > 0){
-    
-                                        // Comprobar que Usuario no ha alcanzado límite de prestamos
-                                        if ((usuarios[x].prestamos_activos <= 3 && usuarios[x].tipo_usuario.equals("ESTUDIANTE") || (usuarios[x].prestamos_activos >= 2 && usuarios[x].tipo_usuario.equals("GENERAL"))) ){
-                                            limitePrestamos = true;
+                   try {
+                       for (int x = 0; x < usuarios.length; x++){
+                           if (usuarios[x].codigo_usuario.equals(codigoIngresado)){
+                                existenciaUsuario = true;
+                               
+                               System.out.print("Ingrese el código del Libro: ");
+                               String codigoLibroIngresado = s.next();
+                               
+                                // Bucle para iterar y comprobar la existencia del libro
+                                try {
+                                    for (int i = 0; i < libros.length; i++){
+                                        if (libros[i].codigo_libro.equals(codigoLibroIngresado)){
+                                            existenciaLibro = true;
                                             
-                                            /*
-                                            ========================================
-                                            ==== Comprobar los días de préstamo ==== 
-                                            ========================================
-                                            */
-                                            System.out.print("Ingrese los días de prestamo: ");
-                                            int diasPrestamo = s.nextInt();
-    
-                                            if ((usuarios[x].tipo_usuario.equals("ESTUDIANTE") && diasPrestamo <= 15) || (usuarios[x].tipo_usuario.equals("GENERAL") && diasPrestamo <= 7)){
-                                                diasIngresados = true;
-                                                
-                                                // Obtener el nuevo índice
-                                                
-                                                int posicionLibre = -1;
-                                                int nuevoId = 0;
-                                                
-                                                for (int f = 0; f < prestamos.length; f++){
-                                                    if (prestamos[f] == null){
-                                                        posicionLibre = f;
-                                                         break;
+                                            // Comprobrar existencias de ejemplares
+                                            if (libros[i].cantidad_disponible > 0){
+            
+                                                // Comprobar que Usuario no ha alcanzado límite de prestamos
+                                                if ((usuarios[x].prestamos_activos < 3 && usuarios[x].tipo_usuario.equals("ESTUDIANTE") || (usuarios[x].prestamos_activos < 2 && usuarios[x].tipo_usuario.equals("GENERAL"))) ){
+                                                    limitePrestamos = true;
+                                                    
+                                                    /*
+                                                    ========================================
+                                                    ==== Comprobar los días de préstamo ==== 
+                                                    ========================================
+                                                    */
+                                                    System.out.print("Ingrese los días de prestamo: ");
+                                                    int diasPrestamo = s.nextInt();
+            
+                                                    if ((usuarios[x].tipo_usuario.equals("ESTUDIANTE") && diasPrestamo > 0 && diasPrestamo <= 15) || (usuarios[x].tipo_usuario.equals("GENERAL") && diasPrestamo > 0 && diasPrestamo <= 7)){
+                                                        diasIngresados = true;
+                                                        
+                                                        // Obtener el nuevo índice
+                                                        
+                                                        int nuevoId = 1; 
+                                                        int posicionLibre = -1;
+        
+                                                        // Buscar el ID más alto en todo el arreglo
+                                                        try {
+                                                            for (int f = 0; f < prestamos.length; f++) {
+                                                                if (prestamos[f] != null) {
+                                                                    if (prestamos[f].id >= nuevoId) {
+                                                                        nuevoId = prestamos[f].id + 1; 
+                                                                    }
+                                                                }
+                                                            }
+            
+                                                            // Buscar la primera posición libre para el nuevo préstamo
+                                                            for (int f = 0; f < prestamos.length; f++) {
+                                                                if (prestamos[f] == null) {
+                                                                    posicionLibre = f;
+                                                                    break; 
+                                                                }
+                                                            }
+                                                            
+                                                        } catch (ArrayIndexOutOfBoundsException e) {
+                                                            System.out.println("Se desbordo de la cantidad del array.");
+                                                        }
+            
+                                                        if (posicionLibre == -1) {
+                                                            System.out.println("No hay espacio para registrar más préstamos.");
+                                                        } else {
+                                                            // Creación del préstamo
+                                                            prestamos[posicionLibre] = new Prestamo();
+                                                            prestamos[posicionLibre].id = nuevoId;
+                                                            prestamos[posicionLibre].usuario_prestamo = usuarios[x];
+                                                            prestamos[posicionLibre].libro_prestado = libros[i];
+                                                            prestamos[posicionLibre].dias_prestado = diasPrestamo;
+                                                            prestamos[posicionLibre].estado = "ACTIVO";
+                                                            // Actualizar los datos
+                                                            libros[i].aumentarPrestamo();
+                                                            usuarios[x].aumentarPrestamo();
+
+                                                            // Confirmar la creacíon
+                                                            System.out.println("Préstamo permitido y añadido.");
+                                                        }
+            
+                                                        break;
                                                     }
-    
-                                                    // Obtener nuevo id
-                                                    for (int g = 0; g <= prestamos[f].id; g++){
-                                                        nuevoId = g;
+                                                    else{diasIngresados = false;
+            
                                                     }
+                                                    if (!diasIngresados){
+                                                    System.out.println("Días no permitidos");
+                                                    }
+                                                    break;
                                                 }
-    
-                                                // Creación del préstamo
-    
-                                                prestamos[posicionLibre] = new Prestamo();
-                                                prestamos[posicionLibre].id = nuevoId;
-                                                prestamos[posicionLibre].usuario_prestamo = usuarios[x];
-                                                prestamos[posicionLibre].libro_prestado = libros[i];
-                                                prestamos[posicionLibre].dias_prestado = diasPrestamo;
-                                                prestamos[posicionLibre].estado = "ACTIVO";
-                                                // Actualizar los datos
-                                                libros[i].aumentarPrestamo();
-                                                usuarios[x].aumentarPrestamo();
-    
-                                                // Confirmar la creacíon
-                                                System.out.println("Préstamo permitido y añadido.");
-    
-                                                break;
-                                            }
-                                            else{diasIngresados = false;
-    
-                                            }
+                                                else{
+                                                    limitePrestamos = false;
+                                                }
+                                                if (!limitePrestamos){
+                                                        System.out.println("No se pueden emitir prestamos, límite de préstamo alcanzado.");
+                                                }
+                                                
+            
+                                            }else {System.out.println("Libro no disponible por falta de unidades.");}
+            
                                             break;
                                         }
-                                        else{
-                                            limitePrestamos = false;
-                                        }
-    
-                                    }else {System.out.println("Libro no disponible por falta de unidades.");}
-    
+                                        else{existenciaLibro = false;}
+                                    }
+                                    if (!existenciaLibro){
+                                        System.out.println("No existe el libro");
+                                    }
                                     break;
+                                    
+                                } catch (ArrayIndexOutOfBoundsException e) {
+                                    System.out.println("Se desbordo de la cantidad del array.");
                                 }
-                                else{existenciaLibro = false;}
                             }
-                            break;
                         }
-                        else{existenciaUsuario = false;}
+        
+                        if (!existenciaUsuario){
+                            System.out.println("No existe el usuario ingresado");
+                        }
+                    
+                   } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Se desbordo de la cantidad del array.");
+                                break;
+                   }
     
-                    }
-    
-                    if (!existenciaUsuario){
-                        System.out.println("No existe el usuario ingresado");
-                    }
-                    if (!existenciaLibro){
-                        System.out.println("No existe el libro");
-                    }
-    
-                    if (!limitePrestamos){
-                        System.out.println("No se pueden emitir prestamos, límite de préstamo alcanzado.");
-                    }
-                    if (!diasIngresados){
-                        System.out.println("Días no permitidos");
-                    }
+
+
     
                     break;
                 case 4:
@@ -335,7 +372,7 @@ public class Main {
                     for (int x = 0; x < prestamos.length; x++){
                         if (prestamos[x] != null){
     
-                            if (prestamos[x].id == idIngresado){
+                            if (prestamos[x].id == idIngresado && prestamos[x].estado.equals("ACTIVO")){
                                 idNoEncontrado = true;      // Manejo de condición
     
                                 System.out.print("Seguro que quiere devolver: y/n ");
@@ -351,8 +388,6 @@ public class Main {
                                 break;
     
                             }
-                            else{idNoEncontrado = false;}
-                            
                         }
                     }
     
@@ -364,40 +399,51 @@ public class Main {
                 case 5:
                     System.out.println(" ------------------ Préstamos ------------------");
                         
+                    try {
                         // Blucle para iterar los préstamos
-                    for (int x = 0; x < prestamos.length; x++){
-    
-                        if (prestamos[x] != null){
-                            prestamos[x].consularPrestamos();
-                            System.out.println("\n-----------------------------------------\n");
+                        for (int x = 0; x < prestamos.length; x++){
+        
+                            if (prestamos[x] != null && prestamos[x].estado.equals("ACTIVO")){
+                                prestamos[x].consultarPrestamos();
+                                System.out.println("\n-----------------------------------------\n");
+                            }
                         }
+                        break;
+        
+                        
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Se desbordo de la cantidad del array.");
+                        break;
                     }
-                    break;
-    
                 
                 case 6:
                     System.out.println(" ------------------ Búsqueda de libros ------------------");
     
                     System.out.print("Ingrese el código del libro: ");
                     String codigoBuscar = s.next();
-                    boolean libroEncontrado = true;
-    
-                    // Bucle para iterar y buscar el libro
-                    for (int x = 0; x < libros.length; x++){
-    
-                        if (libros[x].codigo_libro.equals(codigoBuscar)){
-                            libroEncontrado = true;
-                            libros[x].consultarInfo();
-                            break;
-                        }else{libroEncontrado = false;}
-    
-    
+                    boolean libroEncontrado = false;
+
+                    try {
+                        // Bucle para iterar y buscar el libro
+                        for (int x = 0; x < libros.length; x++){
+        
+                            if (libros[x].codigo_libro.equals(codigoBuscar)){
+                                libroEncontrado = true;
+                                libros[x].consultarInfo();
+                                break;
+                            }
+        
+                        }
+        
+                        if (!libroEncontrado){
+                            System.out.println("Libro no encontrado.");
+                        }
+                        break;
+                        
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Se desbordo de la cantidad del array.");
+                        break;
                     }
-    
-                    if (!libroEncontrado){
-                        System.out.println("Libro no encontrado.");
-                    }
-                    break;
     
                 case 7:
                     System.out.println(" ------------------ Estadísticas ------------------");
@@ -406,86 +452,93 @@ public class Main {
                     int ejemplaresDispoibles = 0;
                     String unidadesLibros = "";
     
-                    // Bucle para encontrar la cantidad de libros totales y por unidad.
-                    for (int x = 0; x < libros.length; x++){
-                        if (libros[x] != null){
-                            cantidadlibros ++;
-    
-                            // Encontrar solo los ejemplares disponibles
-                            ejemplaresDispoibles += libros[x].cantidad_disponible;
-                            unidadesLibros += libros[x].titulo + ": " + libros[x].cantidad_disponible + "\n";
-    
-    
-                        }
-                    }
-    
-                    // Bucle para mostrar los préstamos totales
-                    int cantidadPrestamos = 0;
-                    int prestamosUsuarios = 0;
-    
-                    for (int x = 0; x < prestamos.length; x++){
-                        if (prestamos[x] != null){
-                            cantidadPrestamos ++;  
-                        }
-                    }
-    
-                    // Bucle para encontrar la cantidad de usuarios con préstamos
-                    for (int i = 0; i < usuarios.length; i++){
-                        if (usuarios[i] != null){
-    
-                            if ( usuarios[i].prestamos_activos > 0){
-                                prestamosUsuarios ++;
+                    try {
+                        // Bucle para encontrar la cantidad de libros totales y por unidad.
+                        for (int x = 0; x < libros.length; x++){
+                            if (libros[x] != null){
+                                cantidadlibros ++;
+        
+                                // Encontrar solo los ejemplares disponibles
+                                ejemplaresDispoibles += libros[x].cantidad_disponible;
+                                unidadesLibros += libros[x].titulo + ": " + libros[x].cantidad_disponible + "\n";
+        
+        
                             }
                         }
-                    }
-    
-                    // Bucle para encontrar el libro con mayor ejemplares disponibles
-                    String libroMax = "";
-                    int contador = 0;
-    
-                    for (int x = 0; x < libros.length; x++){
-                        if (libros[x] != null){
-    
-                            if (libros[x].cantidad_disponible > contador){
-                                contador = 0;
-                                libroMax = libros[x].titulo;
-                                contador += libros[x].cantidad_disponible;
+        
+                        // Bucle para mostrar los préstamos totales
+                        int cantidadPrestamos = 0;
+                        int prestamosUsuarios = 0;
+        
+                        for (int x = 0; x < prestamos.length; x++){
+                            if (prestamos[x] != null && prestamos[x].estado.equals("ACTIVO")){
+                                cantidadPrestamos ++;  
                             }
-    
                         }
-                    }
-    
-                    // Bucle para encontrar cantidad de usuarios por cada tipo.
-                    int usuariosEstudiantes = 0;
-                    int usuariosGeneral = 0;
-                    for (int x = 0; x < usuarios.length; x++)
-                        if (usuarios[x] != null){
-    
-                            if (usuarios[x].tipo_usuario.equals("ESTUDIANTE")){
-                                usuariosEstudiantes ++;
+        
+                        // Bucle para encontrar la cantidad de usuarios con préstamos
+                        for (int i = 0; i < usuarios.length; i++){
+                            if (usuarios[i] != null){
+        
+                                if ( usuarios[i].prestamos_activos > 0){
+                                    prestamosUsuarios ++;
+                                }
                             }
-                            else if (usuarios[x].tipo_usuario.equals("GENERAL")){
-                                usuariosGeneral ++;
-                            }
-                            else{System.out.println("NO pertenece a ningún grupo");}
                         }
-                    
-                    System.out.println("Cantidad de libro: " + cantidadlibros);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Ejemplares disponibles totales: " + ejemplaresDispoibles);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Ejemplares de libros por título: \n" + unidadesLibros);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Cantidad de préstamos activos: " + cantidadPrestamos);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Cantidad de usuarios con préstamos: " + prestamosUsuarios);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Libro con mayor ejemplares disponibles: " + libroMax);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Usuarios que son estudiantes: " + usuariosEstudiantes);
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Usuariso que son general: " + usuariosGeneral);
+                        // Bucle para encontrar el libro con mayor ejemplares disponibles
+                        String libroMax = "";
+                        int contador = 0;
+                        for (int x = 0; x < libros.length; x++){
+                            if (libros[x] != null){
+        
+                                if (libros[x].cantidad_disponible > contador){
+                                    contador = 0;
+                                    libroMax = libros[x].titulo;
+                                    contador += libros[x].cantidad_disponible;
+                                }
+        
+                            }
+                        }
+        
+                        // Bucle para encontrar cantidad de usuarios por cada tipo.
+                        int usuariosEstudiantes = 0;
+                        int usuariosGeneral = 0;
+                        for (int x = 0; x < usuarios.length; x++)
+                            if (usuarios[x] != null){
+        
+                                if (usuarios[x].tipo_usuario.equals("ESTUDIANTE")){
+                                    usuariosEstudiantes ++;
+                                }
+                                else if (usuarios[x].tipo_usuario.equals("GENERAL")){
+                                    usuariosGeneral ++;
+                                }
+                                else{System.out.println("NO pertenece a ningún grupo");}
+                            }
+                        
+                            System.out.println("Cantidad de libro: " + cantidadlibros);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Ejemplares disponibles totales: " + ejemplaresDispoibles);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Ejemplares de libros por título: \n" + unidadesLibros);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Cantidad de préstamos activos: " + cantidadPrestamos);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Cantidad de usuarios con préstamos: " + prestamosUsuarios);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Libro con mayor ejemplares disponibles: " + libroMax);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Usuarios que son estudiantes: " + usuariosEstudiantes);
+                            System.out.println("----------------------------------------------");
+                            System.out.println("Usuariso que son general: " + usuariosGeneral);
+                        
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Se desbordo de la cantidad del array.");
+                    }
 
+                    break;
+
+                case 8:
+                    System.out.println("Adios");
                     break;
     
                 default:
@@ -495,7 +548,7 @@ public class Main {
             }
             
             
-        } catch (Exception e ) {
+        } catch (InputMismatchException e ) {
             System.out.println("No puede ingresar datos que no sean numericos.");
         }
         // Condicional switch para la verificación de elección

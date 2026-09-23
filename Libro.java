@@ -1,7 +1,5 @@
-import java.util.Scanner;
 public class Libro {
 
-    Scanner s = new Scanner(System.in);
     String codigo_libro;
     String titulo;
     String autor;
