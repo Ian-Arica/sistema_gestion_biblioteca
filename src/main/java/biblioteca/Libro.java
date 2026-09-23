@@ -1,3 +1,5 @@
+package biblioteca;
+
 public class Libro {
 
     String codigo_libro;

@@ -1,3 +1,5 @@
+package biblioteca;
+
 public class Usuario {
     
     String codigo_usuario;

@@ -1,3 +1,5 @@
+package biblioteca;
+
 public class Prestamo {
     
     int id;
