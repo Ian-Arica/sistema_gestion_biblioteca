@@ -25,4 +25,9 @@ public class Usuario {
     public void devolucion(){
         prestamos_activos --;
     }
+
+    @Override
+    public String toString(){
+        return nombre + " (Código: " + codigo_usuario + ")";
+    }
 }

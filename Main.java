@@ -178,35 +178,23 @@ public class Main {
                 // Caso de elección de Mostrar Libros
                 case 1:
                     System.out.println(" ------------------ Libros ------------------");
-                    try {
-                        // Bluce para iterar los libros 
-                        for (int x = 0; x < libros.length; x++){
-                            libros[x].consultarInfo();      // Llamado al método para mostrar la información del libro
-                            System.out.println("\n-----------------------------------------\n");
-                        }
-                        break;
-                        
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Se desbordo de la cantidad del array.");
-                        break;
+                    // Bluce para iterar los libros 
+                    for (int x = 0; x < libros.length; x++){
+                        libros[x].consultarInfo();      // Llamado al método para mostrar la información del libro
+                        System.out.println("\n-----------------------------------------\n");
                     }
+                    break;
     
                     // Caso de elección de Mostrar usuarios
                 case 2:
                         System.out.println(" ------------------ Usuarios ------------------");
                         
                         // Blucle para iterar los usuarios
-                    try {
-                        for (int x = 0; x < usuarios.length; x++){
-                            usuarios[x].consultarInfo();    // Llamdo al método para mostrar la información del usuario
-                            System.out.println("\n-----------------------------------------\n");
-                        }
-                        break;
-                        
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Se desbordo de la cantidad del array.");
-                        break;
+                    for (int x = 0; x < usuarios.length; x++){
+                        usuarios[x].consultarInfo();    // Llamdo al método para mostrar la información del usuario
+                        System.out.println("\n-----------------------------------------\n");
                     }
+                    break;
     
                     // Caso de elección de Realizar préstamo
                 case 3:
@@ -228,8 +216,7 @@ public class Main {
     
                    
                    // Bucle para iterar y comprobar la existencia del usuario
-                   try {
-                       for (int x = 0; x < usuarios.length; x++){
+                   for (int x = 0; x < usuarios.length; x++){
                            if (usuarios[x].codigo_usuario.equals(codigoIngresado)){
                                 existenciaUsuario = true;
                                
@@ -237,8 +224,7 @@ public class Main {
                                String codigoLibroIngresado = s.next();
                                
                                 // Bucle para iterar y comprobar la existencia del libro
-                                try {
-                                    for (int i = 0; i < libros.length; i++){
+                                for (int i = 0; i < libros.length; i++){
                                         if (libros[i].codigo_libro.equals(codigoLibroIngresado)){
                                             existenciaLibro = true;
                                             
@@ -266,8 +252,7 @@ public class Main {
                                                         int posicionLibre = -1;
         
                                                         // Buscar el ID más alto en todo el arreglo
-                                                        try {
-                                                            for (int f = 0; f < prestamos.length; f++) {
+                                                        for (int f = 0; f < prestamos.length; f++) {
                                                                 if (prestamos[f] != null) {
                                                                     if (prestamos[f].id >= nuevoId) {
                                                                         nuevoId = prestamos[f].id + 1; 
@@ -275,16 +260,12 @@ public class Main {
                                                                 }
                                                             }
             
-                                                            // Buscar la primera posición libre para el nuevo préstamo
-                                                            for (int f = 0; f < prestamos.length; f++) {
+                                                        // Buscar la primera posición libre para el nuevo préstamo
+                                                        for (int f = 0; f < prestamos.length; f++) {
                                                                 if (prestamos[f] == null) {
                                                                     posicionLibre = f;
                                                                     break; 
                                                                 }
-                                                            }
-                                                            
-                                                        } catch (ArrayIndexOutOfBoundsException e) {
-                                                            System.out.println("Se desbordo de la cantidad del array.");
                                                         }
             
                                                         if (posicionLibre == -1) {
@@ -334,24 +315,13 @@ public class Main {
                                     }
                                     break;
                                     
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    System.out.println("Se desbordo de la cantidad del array.");
                                 }
                             }
-                        }
         
                         if (!existenciaUsuario){
                             System.out.println("No existe el usuario ingresado");
                         }
                     
-                   } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Se desbordo de la cantidad del array.");
-                                break;
-                   }
-    
-
-
-    
                     break;
                 case 4:
                     System.out.println(" ------------------ Realizar devolución ------------------");
@@ -399,22 +369,15 @@ public class Main {
                 case 5:
                     System.out.println(" ------------------ Préstamos ------------------");
                         
-                    try {
-                        // Blucle para iterar los préstamos
-                        for (int x = 0; x < prestamos.length; x++){
+                    // Blucle para iterar los préstamos
+                    for (int x = 0; x < prestamos.length; x++){
         
-                            if (prestamos[x] != null && prestamos[x].estado.equals("ACTIVO")){
-                                prestamos[x].consultarPrestamos();
-                                System.out.println("\n-----------------------------------------\n");
-                            }
+                        if (prestamos[x] != null && prestamos[x].estado.equals("ACTIVO")){
+                            prestamos[x].consultarPrestamos();
+                            System.out.println("\n-----------------------------------------\n");
                         }
-                        break;
-        
-                        
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Se desbordo de la cantidad del array.");
-                        break;
                     }
+                    break;
                 
                 case 6:
                     System.out.println(" ------------------ Búsqueda de libros ------------------");
@@ -423,27 +386,21 @@ public class Main {
                     String codigoBuscar = s.next();
                     boolean libroEncontrado = false;
 
-                    try {
-                        // Bucle para iterar y buscar el libro
-                        for (int x = 0; x < libros.length; x++){
+                    // Bucle para iterar y buscar el libro
+                    for (int x = 0; x < libros.length; x++){
         
-                            if (libros[x].codigo_libro.equals(codigoBuscar)){
-                                libroEncontrado = true;
-                                libros[x].consultarInfo();
-                                break;
-                            }
-        
+                        if (libros[x].codigo_libro.equals(codigoBuscar)){
+                            libroEncontrado = true;
+                            libros[x].consultarInfo();
+                            break;
                         }
         
-                        if (!libroEncontrado){
-                            System.out.println("Libro no encontrado.");
-                        }
-                        break;
-                        
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Se desbordo de la cantidad del array.");
-                        break;
                     }
+        
+                    if (!libroEncontrado){
+                        System.out.println("Libro no encontrado.");
+                    }
+                    break;
     
                 case 7:
                     System.out.println(" ------------------ Estadísticas ------------------");
@@ -452,9 +409,8 @@ public class Main {
                     int ejemplaresDispoibles = 0;
                     String unidadesLibros = "";
     
-                    try {
-                        // Bucle para encontrar la cantidad de libros totales y por unidad.
-                        for (int x = 0; x < libros.length; x++){
+                    // Bucle para encontrar la cantidad de libros totales y por unidad.
+                    for (int x = 0; x < libros.length; x++){
                             if (libros[x] != null){
                                 cantidadlibros ++;
         
@@ -529,11 +485,7 @@ public class Main {
                             System.out.println("----------------------------------------------");
                             System.out.println("Usuarios que son estudiantes: " + usuariosEstudiantes);
                             System.out.println("----------------------------------------------");
-                            System.out.println("Usuariso que son general: " + usuariosGeneral);
-                        
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Se desbordo de la cantidad del array.");
-                    }
+                                System.out.println("Usuariso que son general: " + usuariosGeneral);
 
                     break;
 

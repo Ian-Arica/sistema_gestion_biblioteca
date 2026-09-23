@@ -29,4 +29,9 @@ public class Libro {
         cantidad_disponible ++;
     }
 
+    @Override
+    public String toString(){
+        return titulo + " (Código: " + codigo_libro + ")";
+    }
+
 }
